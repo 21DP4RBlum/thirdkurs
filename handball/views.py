@@ -1,11 +1,22 @@
 ﻿from django.shortcuts import render
 from django.utils import timezone
 from .models import Virsliga2324, UpcomingGame
-from .forms import UpcomingGameForm
-from handball.models import Team  # Import the Team model
+from handball.models import Team, TeamStats
 
 def index(request):
-    table_data = Virsliga2324.objects.values('vieta', 'komanda', 'spelets', 'uzvarets', 'neizskirts', 'zaudets', 'guti_varti', 'plus_minus', 'punkti')
+    # Query data from Virsliga2324 table
+    virsliga_data = Virsliga2324.objects.values(
+        'vieta', 'komanda', 'spelets', 'uzvarets',
+        'neizskirts', 'zaudets', 'guti_varti', 'plus_minus', 'punkti'
+    )
+    print("Virsliga Data:", virsliga_data)
+
+    # Query data from handball_teamstats table
+    team_stats = TeamStats.objects.values(
+        'vieta', 'team__team_name', 'spelets', 'uzvarets',
+        'neizskirts', 'zaudets', 'guti_varti', 'plus_minus', 'punkti'
+    ).order_by('vieta')
+    print("Team Stats:", team_stats)
 
     # Query upcoming games sorted by time, date, and venue
     upcoming_games = UpcomingGame.objects.filter(time__gte=timezone.now()).order_by('time', 'venue')
@@ -16,9 +27,10 @@ def index(request):
         game.team2 = Team.objects.get(pk=game.team2_id).team_name
 
     context = {
+        'virsliga_data': virsliga_data,
+        'team_stats': team_stats,
         'upcoming_games': upcoming_games,
         'no_games': not upcoming_games.exists(),  
-        'table_data': table_data,
     }
 
     return render(request, 'index.html', context)

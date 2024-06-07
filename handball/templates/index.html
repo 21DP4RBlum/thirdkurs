@@ -113,7 +113,41 @@
                 </tr>
             </thead>
             <tbody>
-                {% for row in table_data %}
+                {% for row in virsliga_data %}
+                <tr>
+                    <td>{{ row.vieta }}</td>
+                    <td>{{ row.komanda }}</td>
+                    <td>{{ row.spelets }}</td>
+                    <td>{{ row.uzvarets }}</td>
+                    <td>{{ row.neizskirts }}</td>
+                    <td>{{ row.zaudets }}</td>
+                    <td>{{ row.guti_varti }}</td>
+                    <td>{{ row.plus_minus }}</td>
+                    <td>{{ row.punkti }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="table-container">
+        <!-- Table title aligned to the middle -->
+        <h2 class="table-title">Virslīga 2024/25</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Vieta</th>
+                    <th>Komanda</th>
+                    <th>Spēlēts</th>
+                    <th>Uzvarēts</th>
+                    <th>Neizšķirts</th>
+                    <th>Zaudēts</th>
+                    <th>Gūti vārti</th>
+                    <th>+/-</th>
+                    <th>Punkti</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in team_stats %}
                 <tr>
                     <td>{{ row.vieta }}</td>
                     <td>{{ row.komanda }}</td>
