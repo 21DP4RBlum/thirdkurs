@@ -1,7 +1,6 @@
 {% load tz %}
 {% load i18n %}
 {% load static %}
-{% include 'next_games_container.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,7 @@
     <style>
         .header-info {
             display: flex;
-            justify-content: center; /* To align text in the middle */
+            justify-content: center;
             padding: 0px;
             background-color: #bababa;
             color: #333;
@@ -20,29 +19,37 @@
 
         .table-container {
             overflow-x: auto;
-            text-align: right; /* Align the table to the right */
-            width: 50%; /* Set the width of the table container */
-            margin-left: auto; /* Center the table container horizontally */
-            margin-right: 25px; /* Remove default right margin */
-            margin-top: 20px; /* Add some top margin for spacing */
-            position: relative; /* Set position to relative */
+            text-align: right;
+            width: 50%;
+            margin-left: auto;
+            margin-right: 25px;
+            margin-top: 20px;
+            position: relative;
+            float: right;
+        }
+
+        .next-games-container {
+            width: 300px;
+            float: left;
+            margin-right: 20px;
+            margin-top: 20px;
         }
 
         .table-title {
-            text-align: center; /* Align title text to the center */
-            font-size: 18px; /* Font size for the title */
-            margin-top: 20px; /* Add margin on top of the title */
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             border-spacing: 0;
-            font-size: 14px; /* Downsize the font of the table content */
+            font-size: 14px;
         }
 
         th, td {
-            padding: 6px 10px; /* Adjust cell padding */
+            padding: 6px 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -60,43 +67,42 @@
         }
 
         footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
             background-color: #333;
             color: #fff;
-            padding: 1px;
+            padding: 10px 0;
             text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
         .footer-content {
-            max-width: 1200px; /* Set a maximum width for the content */
-            margin: 0 auto; /* Center the content horizontally */
+            max-width: 1200px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <div class="header-info">
-        <p>Raivo Blumenaua 3. kursa projekts</p>
+        <p>Raivo Blumenaua 4. kursa projekts</p>
     </div>
     <header>
         <div class="container">
-            <!-- Apply the same class to "Handbolam" -->
             <a href="/" class="nav-button handbolam">Handbolam</a>
             <nav>
                 <ul>
-                    <!-- Add classes to style the buttons -->
-                    <li><a href="#" class="nav-button">Vīriešu virslīga</a></li>
-                    <!--  <li><a href="#" class="nav-button">1. Līga</a></li>   --> <!--1. Līga pagaidām nav iekļauta-->
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Include your table here -->
+    <!-- Include next games container -->
+    <div class="next-games-container">
+        {% include 'next_games_container.html' %}
+    </div>
+
+    <!-- Table containers -->
     <div class="table-container">
-        <!-- Table title aligned to the middle -->
         <h2 class="table-title">Virslīga 2023/24</h2>
         <table>
             <thead>
@@ -129,14 +135,14 @@
             </tbody>
         </table>
     </div>
+
     <div class="table-container">
-        <!-- Table title aligned to the middle -->
         <h2 class="table-title">Virslīga 2024/25</h2>
         <table>
             <thead>
                 <tr>
                     <th>Vieta</th>
-                    <th>Komanda</th>
+                    <th>Team</th>
                     <th>Spēlēts</th>
                     <th>Uzvarēts</th>
                     <th>Neizšķirts</th>
@@ -147,26 +153,26 @@
                 </tr>
             </thead>
             <tbody>
-                {% for row in team_stats %}
+                {% for stats in team_stats %}
                 <tr>
-                    <td>{{ row.vieta }}</td>
-                    <td>{{ row.komanda }}</td>
-                    <td>{{ row.spelets }}</td>
-                    <td>{{ row.uzvarets }}</td>
-                    <td>{{ row.neizskirts }}</td>
-                    <td>{{ row.zaudets }}</td>
-                    <td>{{ row.guti_varti }}</td>
-                    <td>{{ row.plus_minus }}</td>
-                    <td>{{ row.punkti }}</td>
+                    <td>{{ stats.vieta }}</td>
+                    <td>{{ stats.team_id__team_name }}</td>
+                    <td>{{ stats.spelets }}</td>
+                    <td>{{ stats.uzvarets }}</td>
+                    <td>{{ stats.neizskirts }}</td>
+                    <td>{{ stats.zaudets }}</td>
+                    <td>{{ stats.guti_varti }}</td>
+                    <td>{{ stats.plus_minus }}</td>
+                    <td>{{ stats.punkti }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
     <footer>
         <div class="footer-content">
-            <p>&copy; 2024 Raivo Blumenaus DP3-4 projekta darbs.</p>
-            <!-- You can add more content here, such as links or additional information -->
+            <p>&copy; 2025 Raivo Blumenaus DP4-4 projekta darbs.</p>
         </div>
     </footer>
 </body>

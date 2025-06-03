@@ -1,0 +1,20 @@
+{% extends "admin/change_form.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Custom CSS styles if needed */
+</style>
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+<div class="score-update-form">
+    <h2>Update Scores</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ score_update_form.as_p }}
+        <button type="submit">Update Scores</button>
+    </form>
+</div>
+{% endblock %}

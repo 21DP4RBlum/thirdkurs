@@ -3,25 +3,21 @@
 {% load static %}
 
 <style>
-    /* Additional CSS for the "Nākamās spēles" window */
-    .next-games-container {
-        position: absolute;
-        top: 150px; /* Keep the original top position */
-        left: 50px; /* Keep the original left position */
-        width: 650px; /* Set the width of the container */
-        margin-bottom: 20px;
+    /* Additional CSS for the "Nākamās spēles" and "Bijušās spēles" containers */
+    .games-sections {
+        display: flex; /* Use flexbox to align sections side by side */
+        justify-content: space-between; /* Space out the sections evenly */
+        padding-top: 20px; /* Adjust top padding as needed */
+        margin-bottom: 20px; /* Add margin below the sections */
     }
 
-    .next-games-window {
-        width: 100%;
-        padding: 20px;
-        background-color: #000000;
+    .next-games-container {
+        width: 45%; /* Set width of each container */
+        padding: 10px;
+        background-color: lightblue;
         border: 1px solid #000000;
         border-radius: 10px;
         margin-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        background-color: lightblue;
     }
 
     .next-games-content {
@@ -30,7 +26,7 @@
     }
 
     .team-info {
-        margin-right: 50px; /* Add spacing between team info */
+        margin-right: 20px; /* Add spacing between team info */
     }
 
     .venue-time {
@@ -42,41 +38,77 @@
     }
 
     .team-image {
-        width: 75px; /* Set the width of the images */
+        width: 50px; /* Set the width of the images */
         height: auto; /* Maintain aspect ratio */
         margin-right: 10px; /* Add spacing between team name and image */
     }
+
+    .no-games-message {
+        font-style: italic;
+    }
 </style>
 
-<div class="next-games-container">
-    <h2>Nākamās spēles</h2>
-    {% if upcoming_games %}
-    <!-- Display upcoming games if available -->
-    {% for game in upcoming_games %}
-    <div class="next-games-window">
-        <!-- Display game details -->
+<div class="games-sections">
+    <!-- Past games with scores -->
+    <div class="next-games-container">
+        <h2>Bijušās spēles</h2>
+        {% if past_games %}
+        {% for game in past_games %}
+        <div class="next-games-window">
+            <div class="next-games-content">
+                <div class="team-info">
+                    <p><span class="team-name">{{ game.team1_name }}</span></p>
+                    <!-- Replace with actual image if available -->
+                    <img src="{{ game.team1_image.url }}" alt="{{ game.team1_name }}" class="team-image">
+                </div>
+                <div class="team-info">
+                    <p><span class="team-name">{{ game.team2_name }}</span></p>
+                    <!-- Replace with actual image if available -->
+                    <img src="{{ game.team2_image.url }}" alt="{{ game.team2_name }}" class="team-image">
+                </div>
+            </div>
+            <div class="venue-time">
+                <p>{{ game.venue }}</p>
+                <p>{{ game.time }}</p>
+                <p>Rezultāts: {{ game.team1_score }} - {{ game.team2_score }}</p>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
         <div class="next-games-content">
-            <div class="team-info">
-                <p><span class="team-name"></span> {{ game.team1 }}</p>
-                <!-- Display the team image next to the team name -->
-                <img src="{% static 'images/1.png' %}" alt="{{ game.team1 }}" class="team-image">
+            <p class="no-games-message">Nav bijušas spēles</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Upcoming games with scores -->
+    <div class="next-games-container">
+        <h2>Nākamās spēles</h2>
+        {% if upcoming_games %}
+        {% for game in upcoming_games %}
+        <div class="next-games-window">
+            <div class="next-games-content">
+                <div class="team-info">
+                    <p><span class="team-name">{{ game.team1_name }}</span></p>
+                    <!-- Replace with actual image if available -->
+                    <img src="{{ game.team1_image.url }}" alt="{{ game.team1_name }}" class="team-image">
+                </div>
+                <div class="team-info">
+                    <p><span class="team-name">{{ game.team2_name }}</span></p>
+                    <!-- Replace with actual image if available -->
+                    <img src="{{ game.team2_image.url }}" alt="{{ game.team2_name }}" class="team-image">
+                </div>
             </div>
-            <div class="team-info">
-                <p><span class="team-name"></span> {{ game.team2 }}</p>
-                <!-- Display the team image next to the team name -->
-                <img src="{% static 'images/2.png' %}" alt="{{ game.team2 }}" class="team-image">
+            <div class="venue-time">
+                <p>{{ game.venue }}</p>
+                <p>{{ game.time }}</p>
             </div>
         </div>
-        <div class="venue-time">
-            <p class="venue-time"> {{ game.venue }}</p>
-            <p class="venue-time"> {{ game.time }}</p>
+        {% endfor %}
+        {% else %}
+        <div class="next-games-content">
+            <p class="no-games-message">Pagaidām nav ieplānotu spēļu</p>
         </div>
+        {% endif %}
     </div>
-    {% endfor %}
-    {% else %}
-    <!-- Display message if no upcoming games -->
-    <div class="next-games-window">
-        <p class="no-games-message">Pagaidām nav ieplānotu spēļu</p>
-    </div>
-    {% endif %}
 </div>

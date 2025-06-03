@@ -20,3 +20,8 @@ class UpcomingGameForm(forms.ModelForm):
             if self.instance.team2:
                 team2_logo_path = self.instance.team2.get_default_logo_path()
                 self.fields['team2_image'] = forms.ImageField(initial=team2_logo_path)
+
+class ScoreUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UpcomingGame
+        fields = ['team1_score', 'team2_score']
