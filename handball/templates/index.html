@@ -12,8 +12,14 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e0e0e0;
             color: #222;
+            background-image: url("{% static 'images/handball-bg.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-blend-mode: multiply;
+            background-color: rgba(20, 20, 20, 0.92); 
         }
 
         .header-info {
@@ -226,6 +232,16 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        th.sort-asc::after {
+            content: " ↑";
+            font-size: 12px;
+        }
+
+        th.sort-desc::after {
+            content: " ↓";
+            font-size: 12px;
+        }
     </style>
 
 </head>
@@ -332,5 +348,47 @@
             <p>&copy; 2025 Raivo Blumenaus DP4-4 projekta darbs.</p>
         </div>
     </footer>
+    <script>
+        document.querySelectorAll("table").forEach(table => {
+            const headers = table.querySelectorAll("th");
+
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+
+                header.addEventListener("click", () => {
+                    const tbody = table.querySelector("tbody");
+                    const rows = Array.from(tbody.querySelectorAll("tr"));
+                    const isAsc = header.classList.toggle("sort-asc");
+                    header.classList.remove("sort-desc");
+
+                    // Reset other headers' classes
+                    headers.forEach((h, i) => {
+                        if (i !== index) h.classList.remove("sort-asc", "sort-desc");
+                    });
+
+                    if (!isAsc) {
+                        header.classList.add("sort-desc");
+                        header.classList.remove("sort-asc");
+                    }
+
+                    rows.sort((a, b) => {
+                        const A = a.children[index].innerText.trim();
+                        const B = b.children[index].innerText.trim();
+
+                        const numA = parseFloat(A.replace(",", "."));
+                        const numB = parseFloat(B.replace(",", "."));
+
+                        if (!isNaN(numA) && !isNaN(numB)) {
+                            return isAsc ? numA - numB : numB - numA;
+                        }
+
+                        return isAsc ? A.localeCompare(B) : B.localeCompare(A);
+                    });
+
+                    rows.forEach(row => tbody.appendChild(row));
+                });
+            });
+        });
+    </script>
 </body>
 </html>
