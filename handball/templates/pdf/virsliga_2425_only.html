@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        h2 {
+            color: #003366;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e0f0ff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Virslīga 2024/25</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Vieta</th>
+                <th>Komanda</th>
+                <th>Spēlēts</th>
+                <th>Uzvarēts</th>
+                <th>Neizšķirts</th>
+                <th>Zaudēts</th>
+                <th>Gūti vārti</th>
+                <th>+/-</th>
+                <th>Punkti</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row.vieta }}</td>
+                <td>{{ row.team_id__team_name }}</td>
+                <td>{{ row.spelets }}</td>
+                <td>{{ row.uzvarets }}</td>
+                <td>{{ row.neizskirts }}</td>
+                <td>{{ row.zaudets }}</td>
+                <td>{{ row.guti_varti }}</td>
+                <td>{{ row.plus_minus }}</td>
+                <td>{{ row.punkti }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

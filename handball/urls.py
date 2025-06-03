@@ -3,6 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-
-    # Other paths if any
+    path('pdf/virsliga/<str:season>/', views.export_table_pdf, name='export_table_pdf'),
 ]
