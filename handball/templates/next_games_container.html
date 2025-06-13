@@ -3,6 +3,7 @@
 {% load static %}
 
 <div class="games-sections">
+
     <!-- Past games -->
     <div class="past-games">
         <h3>Bijušās spēles</h3>
@@ -11,19 +12,20 @@
         <div class="game-card">
             <div class="teams-row">
                 <div class="team-block left">
-                    <img src="{{ game.team1_image.url }}" alt="{{ game.team1_name }}">
-                    <span class="team-name">{{ game.team1_name }}</span>
+                    <img src="{% static game.team1_display_image %}" alt="{{ game.team1_display_name }}">
+                    <a class="team-name" href="{% url 'team_profile' game.team1_id.id %}">{{ game.team1_display_name }}</a>
                 </div>
-                <div class="vs-divider">:</div>
+
+                <div class="vs-divider">{{ game.team1_score }} : {{ game.team2_score }}</div>
+
                 <div class="team-block right">
-                    <span class="team-name">{{ game.team2_name }}</span>
-                    <img src="{{ game.team2_image.url }}" alt="{{ game.team2_name }}">
+                    <a class="team-name" href="{% url 'team_profile' game.team2_id.id %}">{{ game.team2_display_name }}</a>
+                    <img src="{% static game.team2_display_image %}" alt="{{ game.team2_display_name }}">
                 </div>
             </div>
             <div class="venue-time">
                 <p>{{ game.venue }}</p>
                 <p>{{ game.time }}</p>
-                <p><strong>Rezultāts:</strong> {{ game.team1_score }} - {{ game.team2_score }}</p>
             </div>
         </div>
         {% endfor %}
@@ -40,13 +42,15 @@
         <div class="game-card">
             <div class="teams-row">
                 <div class="team-block left">
-                    <img src="{{ game.team1_image.url }}" alt="{{ game.team1_name }}">
-                    <span class="team-name">{{ game.team1_name }}</span>
+                    <img src="{% static game.team1_display_image %}" alt="{{ game.team1_display_name }}">
+                    <a class="team-name" href="{% url 'team_profile' game.team1_id.id %}">{{ game.team1_display_name }}</a>
                 </div>
+
                 <div class="vs-divider">:</div>
+
                 <div class="team-block right">
-                    <span class="team-name">{{ game.team2_name }}</span>
-                    <img src="{{ game.team2_image.url }}" alt="{{ game.team2_name }}">
+                    <a class="team-name" href="{% url 'team_profile' game.team2_id.id %}">{{ game.team2_display_name }}</a>
+                    <img src="{% static game.team2_display_image %}" alt="{{ game.team2_display_name }}">
                 </div>
             </div>
             <div class="venue-time">
@@ -59,4 +63,5 @@
         <p class="no-games-message">Pagaidām nav ieplānotu spēļu</p>
         {% endif %}
     </div>
+
 </div>

@@ -242,6 +242,25 @@
             content: " ↓";
             font-size: 12px;
         }
+
+        a.team-name {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a.team-name:hover {
+            text-decoration: underline;
+        }
+
+        a.team-link {
+            color: inherit;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a.team-link:hover {
+            text-decoration: underline;
+        }
     </style>
 
 </head>
@@ -288,7 +307,17 @@
                         {% for row in virsliga_data %}
                         <tr>
                             <td>{{ row.vieta }}</td>
-                            <td>{{ row.komanda }}</td>
+                            <td>
+                                {% with row.komanda|lower as team_key %}
+                                {% with team_name_to_id_map|get_item:team_key as team_id %}
+                                {% if team_id %}
+                                <a class="team-link" href="{% url 'team_profile' team_id %}">{{ row.komanda }}</a>
+                                {% else %}
+                                {{ row.komanda }} <span style="color: red;">[NO ID]</span>
+                                {% endif %}
+                                {% endwith %}
+                                {% endwith %}
+                            </td>
                             <td>{{ row.spelets }}</td>
                             <td>{{ row.uzvarets }}</td>
                             <td>{{ row.neizskirts }}</td>
@@ -297,6 +326,7 @@
                             <td>{{ row.plus_minus }}</td>
                             <td>{{ row.punkti }}</td>
                         </tr>
+
                         {% endfor %}
                     </tbody>
                 </table>
@@ -327,7 +357,17 @@
                         {% for stats in team_stats %}
                         <tr>
                             <td>{{ stats.vieta }}</td>
-                            <td>{{ stats.team_id__team_name }}</td>
+                            <td>
+                                {% with stats.team_id.team_name|lower as team_key %}
+                                {% with team_id=team_name_to_id_map|get_item:team_key %}
+                                {% if team_id %}
+                                <a class="team-link" href="{% url 'team_profile' team_id %}">{{ stats.team_id.team_name }}</a>
+                                {% else %}
+                                {{ stats.team_id.team_name }} <span style="color: red;">[NO ID]</span>
+                                {% endif %}
+                                {% endwith %}
+                                {% endwith %}
+                            </td>
                             <td>{{ stats.spelets }}</td>
                             <td>{{ stats.uzvarets }}</td>
                             <td>{{ stats.neizskirts }}</td>

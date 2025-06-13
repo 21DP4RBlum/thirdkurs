@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-zgz5)9r(7ur4&aetc@7=48rw1svngh)c%xa59czpgtbl8^x0n6'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'handbols.com']
 
@@ -125,6 +125,8 @@ CSP_FORM_ACTION = ("'self'",)
 TIME_ZONE = 'Europe/Riga'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 

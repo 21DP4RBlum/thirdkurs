@@ -1,0 +1,206 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ team.team_name }}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url("{% static 'images/handball-bg.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-blend-mode: multiply;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: #fff;
+        }
+
+        .header-info {
+            background-color: #ccc;
+            padding: 4px 0;
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+            color: #111;
+        }
+
+        .nav-container {
+            background-color: #b3d9ff;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #004080;
+            text-decoration: none;
+        }
+
+        .team-wrapper {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .team-name {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-blob {
+            background-color: #e6f3ff;
+            color: #000;
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 110px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #003366;
+            margin-bottom: 4px;
+        }
+
+        .game-section {
+            margin: 40px 0;
+        }
+
+            .game-section h2 {
+                color: #fff;
+                text-align: left;
+                margin-bottom: 20px;
+            }
+
+        .game-card {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            padding: 15px 20px;
+            width: 320px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+            .game-card .teams {
+                font-weight: bold;
+                font-size: 18px;
+                color: #003366;
+                display: grid;
+                grid-template-columns: auto auto auto auto auto;
+                align-items: center;
+                justify-content: center;
+                column-gap: 10px;
+                margin-bottom: 8px;
+                text-align: center;
+            }
+
+                .game-card .teams img {
+                    width: 28px;
+                    height: 28px;
+                    object-fit: contain;
+                }
+
+                .game-card .teams strong {
+                    margin: 0 10px;
+                    font-size: 20px;
+                }
+
+            .game-card .datetime {
+                font-size: 14px;
+                color: #333;
+            }
+
+        .blobs-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-info">Raivo Blumenaua 4. kursa projekts</div>
+    <div class="nav-container">
+        <a href="/" class="nav-title">Handbolam</a>
+    </div>
+
+    <div class="team-wrapper">
+        <h1 class="team-name">
+            <img src="{% static team.get_default_logo_path %}" alt="{{ team.team_name }}" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+            {{ team.team_name }}
+        </h1>
+
+        <div class="stats-grid">
+            <div class="stat-blob"><div class="stat-label">Spēlēts</div>{{ stats.spelets }}</div>
+            <div class="stat-blob"><div class="stat-label">Uzvarēts</div>{{ stats.uzvarets }}</div>
+            <div class="stat-blob"><div class="stat-label">Neizšķirts</div>{{ stats.neizskirts }}</div>
+            <div class="stat-blob"><div class="stat-label">Zaudēts</div>{{ stats.zaudets }}</div>
+            <div class="stat-blob"><div class="stat-label">Vārti</div>{{ stats.guti_varti }}</div>
+            <div class="stat-blob"><div class="stat-label">+/-</div>{{ stats.plus_minus }}</div>
+            <div class="stat-blob"><div class="stat-label">Punkti</div>{{ stats.punkti }}</div>
+        </div>
+
+        <div class="game-section">
+            <h2>Iepiekšējās spēles</h2>
+            <div class="blobs-grid">
+                {% for game in past_games %}
+                <div class="game-card">
+                    <div class="teams">
+                        <img src="{% static game.team1_display_image %}" alt="{{ game.team1_display_name }}">
+                        <span>{{ game.team1_display_name }}</span>
+                        <strong>{{ game.team1_score }} : {{ game.team2_score }}</strong>
+                        <span>{{ game.team2_display_name }}</span>
+                        <img src="{% static game.team2_display_image %}" alt="{{ game.team2_display_name }}">
+                    </div>
+                    <div class="datetime">
+                        {{ game.time|date:"d. F, H:i" }}
+                    </div>
+                </div>
+                {% empty %}
+                <p>Nav iepriekšējo spēļu.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="game-section">
+            <h2>Gaidāmās spēles</h2>
+            <div class="blobs-grid">
+                {% for game in upcoming_games %}
+                <div class="game-card">
+                    <div class="teams">
+                        <img src="{% static game.team1_display_image %}" alt="{{ game.team1_display_name }}">
+                        <span>{{ game.team1_display_name }}</span>
+                        <strong> : </strong>
+                        <span>{{ game.team2_display_name }}</span>
+                        <img src="{% static game.team2_display_image %}" alt="{{ game.team2_display_name }}">
+                    </div>
+                    <div class="datetime">
+                        {{ game.time|date:"d. F, H:i" }}
+                    </div>
+                </div>
+                {% empty %}
+                <p>Nav gaidāmo spēļu.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,1 +1,62 @@
-/* This is useless, go to templates/index.html*/
+body {
+    font-family: Arial, sans-serif;
+    margin: -30;
+    padding: 10;
+    background-color: #bababa; /* Very light gray background color */
+}
+
+header {
+    background-color: lightblue; /* Baby blue background color */
+    padding: 0px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: black; /* Text color for Handbolam */
+    text-decoration: none;
+    font-size: 24px; /* Adjust font size as needed */
+    font-weight: bold;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+    nav ul li {
+        display: inline;
+        margin-right: 20px; /* Adjust spacing between menu items as needed */
+    }
+
+.nav-link {
+    color: black; /* Text color for menu items */
+    text-decoration: none;
+    font-size: 18px; /* Adjust font size as needed */
+    font-weight: bold;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    color: #ffffff; /* Text color */
+    background-color: lightblue; /* Button background color */
+    border-radius: 5px;
+}
+
+    /* Add this style to change the appearance when hovered */
+    .nav-button:hover {
+        background-color: #0056b3; /* Darker background color on hover */
+    }
+
+    /* Adjust the font size for the "Handbolam" button */
+    .nav-button.handbolam {
+        font-size: 36px; /* Adjust font size for Handbolam button */
+    }
