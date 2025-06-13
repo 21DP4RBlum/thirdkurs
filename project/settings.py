@@ -5,9 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-zgz5)9r(7ur4&aetc@7=48rw1svngh)c%xa59czpgtbl8^x0n6'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'handbols.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'handbols.com', 'www.handbols.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,9 +21,7 @@ INSTALLED_APPS = [
 ]
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 

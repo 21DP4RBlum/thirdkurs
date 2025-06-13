@@ -1,0 +1,9 @@
+runtime: python311
+entrypoint: gunicorn project.wsgi --bind=0.0.0.0:$PORT
+
+handlers:
+  - url: /static
+    static_dir: staticfiles
+
+  - url: /.*
+    script: auto
